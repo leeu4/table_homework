@@ -3,19 +3,21 @@ const table = document.getElementById("table");
 add_new.addEventListener('click',function(){
     let new_row = document.createElement('tr');
     let task = prompt("ادخل اسم المهمة");
-    let isdone = prompt("هل تمت المهمة ؟");
     let create_time = document.createElement('td');
-    let task_data = document.createElement('td');
+    let task_data = document.createElement('input');
     let task_done = document.createElement('td');
     let edit_butt = document.createElement('button');
     let remove = document.createElement('button');
+
+    task_data.type = "checkbox";
 
     edit_butt.className = "js_button";
     remove.className = "js_button";
     edit_butt.textContent = "تعديل";
     remove.textContent = "حذف";
-
-    if(task !== null && isdone !== null && task!=="" && isdone!==""){
+    task_done.innerHTML = false;
+    
+    if(task !== null && task!==""){
         table.appendChild(new_row);
         new_row.appendChild(task_data);
         new_row.appendChild(task_done);
@@ -25,6 +27,7 @@ add_new.addEventListener('click',function(){
         remove.id = "remove";
         edit_butt.id = "edit";
         task_done.innerHTML = task;
+
         const date = new Date();
         let currentDay= String(date.getDate()).padStart(2, '0');
         
@@ -34,7 +37,7 @@ add_new.addEventListener('click',function(){
     
         let currentDate = `${currentDay}-${currentMonth}-${currentYear}`;
         create_time.innerHTML = currentDate;
-        task_data.innerHTML = isdone;
+        task_data.innerHTML = false;
         remove.addEventListener('click',function(){
             table.removeChild(new_row);
             Swal.fire({
@@ -42,7 +45,6 @@ add_new.addEventListener('click',function(){
                 icon:'success',
             })
         })
-
     }
     else{
         Swal.fire({
@@ -51,12 +53,9 @@ add_new.addEventListener('click',function(){
         })
     }
     edit_butt.addEventListener('click',function(){
-        const date_html = document.getElementById("create_time_html");
         new_task = prompt("ادخل اسم المهمة");
-        new_isdone = prompt("هل تمت المهمة المعدلة ؟");
-        if(new_task !==null && new_isdone !==null &&new_task !=="" &&new_isdone!==""){
-            task_data.innerHTML = new_task;
-            task_done.innerHTML = new_isdone;
+        if(new_task !==null&&new_task !==""){
+            task_done.innerHTML = new_task;
         }
         else{
             Swal.fire({
@@ -64,7 +63,6 @@ add_new.addEventListener('click',function(){
                 icon:'error',
             })
             create_time.innerHTML = currentDate;
-            date_html.innerHTML = "وقت التعديل";
 
         }
     })
